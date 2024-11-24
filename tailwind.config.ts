@@ -11,6 +11,13 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        lightGreen: "#B2CB56",
+        darkGreen: "#3F391D",
+      },
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+        autowide: ["Audiowide", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
       },
     },
   },
