@@ -27,12 +27,14 @@ const Login: React.FC = () => {
             Login
           </button>
         </form>
-        <p className="text-sm text-center mt-4">
-          Don't have an account?{" "}
+        <div className="flex gap-1">
+          <p className="text-sm text-center mt-4">
+            {`Don'&apost have an account?`}
+          </p>
           <Link href="/register" className="text-green-500 hover:underline">
             Register
           </Link>
-        </p>
+        </div>
       </div>
     </div>
   );
