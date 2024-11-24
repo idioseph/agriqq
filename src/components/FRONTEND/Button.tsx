@@ -15,7 +15,7 @@ const Button: NextPage<Props> = ({ text, type = "fill", className }) => {
           : type === "fill"
           ? "bg-darkGreen hover:first:bg-opacity-0 hover:outline-1 outline outline-1 outline-darkGreen hover:text-darkGreen hover:outline backdrop-blur-sm hover:outline-darkGreen"
           : "border border-yellowGreen bg-darkGreen"
-      } py-2 px-6 rounded-md ${className}`}
+      } py-2 px-6 rounded-md font-poppins ${className}`}
     >
       {text}
     </button>

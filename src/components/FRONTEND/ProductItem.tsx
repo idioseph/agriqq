@@ -44,10 +44,10 @@ const ProductItem: React.FC<ProductItemProps> = ({
         <div className="mt-2 lg:hidden gap-2 flex">
           <Button
             text="Add to Cart"
-            className="w-full !font-bold"
+            className="w-full !font-medium"
             type="fill"
           />
-          <div className="text-2xl px-2 rounded-md hover:text-white hover:bg-darkGreen cursor-pointer text-darkGreen border border-darkGreen">
+          <div className="text-xl px-2 flex items-center justify-center rounded-md hover:text-white hover:bg-darkGreen cursor-pointer text-darkGreen border border-darkGreen">
             <ThumbUpOffAltRoundedIcon fontSize="inherit" />
           </div>
         </div>
