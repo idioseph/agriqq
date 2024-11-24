@@ -56,13 +56,13 @@ const Topbar: NextPage<Props> = ({}) => {
       } backdrop-blur-md w-full`}
     >
       <Link href={"/"} className="flex gap-2 items-center">
-        <Image
+        {/* <Image
           src={"logo.svg"}
           className="fill-white"
           height={50}
           width={50}
           alt="Agriqq"
-        />
+        /> */}
         <h4
           className={`text-3xl ${
             scrolled || pathname !== "/" ? "text-darkGreen" : "text-darkGreen"

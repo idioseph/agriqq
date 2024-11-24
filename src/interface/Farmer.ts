@@ -2,7 +2,9 @@ import { Product } from "./Product";
 
 export interface Farmer {
   id: string; // Unique identifier
-  name: string; // Store/Farmer name
+  firstname: string; // Store/Farmer name
+  lastname: string;
+  farmname: string;
   image: string;
   location: string; // Address or general location
   phone: string; // Contact number
