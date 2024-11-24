@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const Login: React.FC = () => {
@@ -28,9 +29,9 @@ const Login: React.FC = () => {
         </form>
         <p className="text-sm text-center mt-4">
           Don't have an account?{" "}
-          <a href="/register" className="text-green-500 hover:underline">
+          <Link href="/register" className="text-green-500 hover:underline">
             Register
-          </a>
+          </Link>
         </p>
       </div>
     </div>

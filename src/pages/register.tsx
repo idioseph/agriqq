@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useState } from "react";
 
 const Register: React.FC = () => {
@@ -59,9 +60,9 @@ const Register: React.FC = () => {
         </form>
         <p className="text-sm text-center mt-4">
           Already have an account?{" "}
-          <a href="/login" className="text-green-500 hover:underline">
+          <Link href="/login" className="text-green-500 hover:underline">
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>
