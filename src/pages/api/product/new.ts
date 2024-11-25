@@ -28,11 +28,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
         if (!decoded.id) {
           res.status(401).json({ message: "Invalid token" });
-          throw Error("Invalid token");
+          // throw Error("Invalid token");
         }
 
         const { name, description, category, price, stock, images } = req.body;
 
+        if (!name || !description || !price || !stock || !images.length) {
+          return res.status(400).json({
+            message:
+              "Missing required fields. Please provide all product details.",
+          });
+        }
         const { role, id } = decoded;
 
         if (role !== "farmer") {
@@ -60,6 +66,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         break;
       } catch (error) {
         if (error instanceof Error) {
+          console.log(error)
           res.status(400).json({ message: error.message });
         }
         break;

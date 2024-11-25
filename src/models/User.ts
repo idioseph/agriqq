@@ -8,6 +8,7 @@ export interface IUser extends Document {
   role: "farmer" | "buyer";
   profileImage?: string; // Optional
   farmName?: string; // Required for farmers
+  farmDescription?: string;
   farmerContact?: string;
   farmAddress?: string;
   joinedDate: Date;
@@ -38,6 +39,9 @@ const UserSchema = new Schema<IUser>(
       required: function () {
         return this.role === "farmer";
       },
+    },
+    farmDescription: {
+      type: String
     },
     joinedDate: { type: Date, default: Date.now },
   },

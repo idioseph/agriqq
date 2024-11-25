@@ -1,9 +1,12 @@
 import { NextPage } from "next";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Button from "./Button";
+import { UserContext } from "@/pages/_app";
+import PermIdentityRoundedIcon from "@mui/icons-material/PermIdentityRounded";
+import { useLogout } from "@/hooks/useLogout";
 
 interface Props {}
 
@@ -30,6 +33,8 @@ const Topbar: NextPage<Props> = ({}) => {
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const [user] = useContext(UserContext);
+  const logout = useLogout();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -92,6 +97,11 @@ const Topbar: NextPage<Props> = ({}) => {
           </svg>
         )}
       </button>
+      {user && (
+        <Link className="lg:hidden" href={"/account"} rel="">
+          <PermIdentityRoundedIcon className="text-black cursor-pointer" />
+        </Link>
+      )}
 
       {/* Menu */}
       <div
@@ -99,7 +109,7 @@ const Topbar: NextPage<Props> = ({}) => {
           navOpen ? "max-h-[1000px]" : "max-h-0"
         }`}
       >
-        <ul className="text-center flex flex-col gap-3 mt-3 lg:flex-row">
+        <ul className="text-center flex flex-col gap-3 mt-3 py-2 lg:flex-row">
           {MainMenu.map((menu: any, i: any) => (
             <div key={`menu-${i}`}>
               {menu.hasChildren ? (
@@ -135,29 +145,67 @@ const Topbar: NextPage<Props> = ({}) => {
               )}
             </div>
           ))}
-          <li className="lg:hidden block">
-            <Link
-              className="btn btn-primary z-0 py-[14px]"
-              href={"/login"}
-              rel=""
+          {!user && (
+            <li className="lg:hidden block">
+              <Link
+                className="btn btn-primary z-0 py-[14px]"
+                href={"/login"}
+                rel=""
+              >
+                <Button
+                  type="fill"
+                  className="text-white font-poppins font-medium"
+                  text="Get Started"
+                />
+              </Link>
+            </li>
+          )}
+
+          {user && (
+            <div
+              className="btn btn-primary z-0 lg:hidden block py-[14px] ml-4"
+              onClick={logout}
             >
               <Button
                 type="fill"
                 className="text-white font-poppins font-medium"
-                text="Get Started"
+                text="Logout"
               />
-            </Link>
-          </li>
+            </div>
+          )}
         </ul>
       </div>
       <div className="order-1 ml-auto hidden min-w-[200px] items-center justify-center lg:order-2 lg:ml-0 lg:flex">
-        <Link className="btn btn-primary z-0 py-[14px]" href={"/login"} rel="">
-          <Button
-            type="fill"
-            className="text-white font-poppins font-medium"
-            text="Get Started"
-          />
-        </Link>
+        {user ? (
+          <Link
+            className="btn btn-primary z-0 py-[14px]"
+            href={"/account"}
+            rel=""
+          >
+            <PermIdentityRoundedIcon className="text-black cursor-pointer" />
+          </Link>
+        ) : (
+          <Link
+            className="btn btn-primary z-0 py-[14px]"
+            href={"/login"}
+            rel=""
+          >
+            <Button
+              type="fill"
+              className="text-white font-poppins font-medium"
+              text="Get Started"
+            />
+          </Link>
+        )}
+        {user && (
+          <div className="btn btn-primary z-0 py-[14px] ml-4" onClick={logout}>
+            <Button
+              type="fill"
+              className="text-white font-poppins font-medium"
+              text="Logout"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

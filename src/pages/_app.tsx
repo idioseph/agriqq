@@ -1,7 +1,7 @@
 import Footer from "@/components/FRONTEND/Footer";
 import Topbar from "@/components/FRONTEND/Topbar";
 import "@/styles/globals.css";
-import { AuthProvider } from "@/utils/auth";
+import { CartProvider } from "@/context/LikedProducts";
 import { jwtDecode } from "jwt-decode";
 import type { AppProps } from "next/app";
 import { createContext, useEffect, useState } from "react";
@@ -30,9 +30,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <UserContext.Provider value={[user, getUser]}>
-      <Topbar />
-      <Component {...pageProps} />
-      <Footer />
+      <CartProvider>
+        <Topbar />
+        <Component {...pageProps} />
+        <Footer />
+      </CartProvider>
     </UserContext.Provider>
   );
 }

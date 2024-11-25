@@ -32,8 +32,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(401).json({ message: "Invalid token" });
       throw Error("Invalid token");
     }
-    const { firstname, lastname, profileImage, farmerContact, farmAddress } =
-      req.body;
+    const {
+      firstname,
+      lastname,
+      profileImage,
+      farmerContact,
+      farmAddress,
+      farmDescription,
+    } = req.body;
 
     const { id, role } = decoded;
 
@@ -51,12 +57,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       profileImage: string;
       farmerContact: string;
       farmAddress: string;
+      farmDescription: string;
     }> = {
       firstname,
       lastname,
       profileImage,
       farmerContact,
       farmAddress,
+      farmDescription,
     };
 
     // Remove undefined values to avoid overwriting fields with `undefined`

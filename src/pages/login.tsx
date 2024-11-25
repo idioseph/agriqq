@@ -1,7 +1,7 @@
 import Button from "@/components/FRONTEND/Button";
 import InputField from "@/components/FRONTEND/Input";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React, {
   ChangeEvent,
   FormEvent,

@@ -26,10 +26,10 @@ const Hero: NextPage<Props> = ({}) => {
           <img className="h-[100vh] object-cover" src="images/hero2.jpg" />
         </div>
       </Carousel>
-      <div className="md:px-36 px-10 sm:px-16 absolute flex flex-col items-start justify-center inset-0 bg-lightGreen bg-opacity-70">
+      <div className="md:px-36 px-10 sm:px-16 absolute flex flex-col items-start justify-center inset-0 bg-white bg-opacity-40">
         <Typewriter
           className={
-            "md:text-5xl md:h-[50px] text-white font-bold text-nowrap text-3xl h-[36px]"
+            "md:text-5xl md:h-[50px] text-darkGreen font-bold text-nowrap text-3xl h-[36px]"
           }
           textList={[
             "Connecting Farmers",
@@ -37,7 +37,7 @@ const Hero: NextPage<Props> = ({}) => {
             "One Click at a Time!",
           ]}
         />
-        <p className="mt-4 text-xl text-white text-left max-w-2xl font-poppins">
+        <p className="mt-4 text-xl text-darkGreen text-left max-w-2xl font-medium font-poppins">
           Fresh Produce, Smarter Marketing, and a Brighter Future for Farmers
           Everywhere.
         </p>
