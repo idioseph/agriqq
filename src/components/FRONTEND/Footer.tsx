@@ -41,8 +41,8 @@ const Footer: React.FC = () => {
         </div>
         <div>
           <h4 className="text-lg font-bold mb-4 font-montserrat">Contact Us</h4>
-          <p className="text-sm font-poppins">Email: support@agriqq.com</p>
-          <p className="text-sm font-poppins">Phone: +234 123 456 7890</p>
+          <p className="text-sm font-poppins">Email: afriqqltd@gmail.com</p>
+          <p className="text-sm font-poppins">Phone: +234 903 8159 106</p>
           <p className="text-sm font-poppins">
             Location: Rivers State
           </p>
