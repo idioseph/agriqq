@@ -1,9 +1,12 @@
 import { NextPage } from "next";
 import ProductItem from "../ProductItem";
+import { Product } from "@/interface/Product";
 
-interface Props {}
+interface Props {
+  products: Product[] | null;
+}
 
-const Products: NextPage<Props> = ({}) => {
+const Products: NextPage<Props> = ({ products }) => {
   return (
     <div className="md:px-24 px-10 gap-5 flex flex-col sm:px-14 py-20 bg-white">
       <div>
@@ -15,43 +18,9 @@ const Products: NextPage<Props> = ({}) => {
         </h4>
       </div>
       <div className="flex justify-center flex-wrap gap-4">
-        <ProductItem
-          image="https://via.placeholder.com/300"
-          name="Syltherine"
-          description="Stylish cafe chair"
-          price={3500000}
-          discountPrice={2500000}
-        />
-        <ProductItem
-          image="https://via.placeholder.com/300"
-          name="Leviosa"
-          description="Stylish cafe chair"
-          price={2500000}
-        />
-        <ProductItem
-          image="https://via.placeholder.com/300"
-          name="Leviosa"
-          description="Stylish cafe chair"
-          price={2500000}
-        />
-        <ProductItem
-          image="https://via.placeholder.com/300"
-          name="Leviosa"
-          description="Stylish cafe chair"
-          price={2500000}
-        />
-        <ProductItem
-          image="https://via.placeholder.com/300"
-          name="Leviosa"
-          description="Stylish cafe chair"
-          price={2500000}
-        />
-        <ProductItem
-          image="https://via.placeholder.com/300"
-          name="Leviosa"
-          description="Stylish cafe chair"
-          price={2500000}
-        />
+        {products?.map((product, index) => (
+          <ProductItem product={product} key={index} />
+        ))}
       </div>
     </div>
   );

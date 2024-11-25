@@ -21,19 +21,40 @@ body {
 }
 
 .link-underline {
-		border-bottom-width: 0;
-		background-image: linear-gradient(transparent, transparent), linear-gradient(#fff, #fff);
-		background-size: 0 3px;
-		background-position: 0 100%;
-		background-repeat: no-repeat;
-		transition: background-size .5s ease-in-out;
-	}
+  border-bottom-width: 0;
+  background-image: linear-gradient(transparent, transparent),
+    linear-gradient(#fff, #fff);
+  background-size: 0 3px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s ease-in-out;
+}
 
-	.link-underline-black {
-		background-image: linear-gradient(transparent, transparent), linear-gradient(#3F391D, #3F391D)
-	}
+.link-underline-black {
+  background-image: linear-gradient(transparent, transparent),
+    linear-gradient(#3f391d, #3f391d);
+}
 
-	.link-underline:hover {
-		background-size: 100% 3px;
-		background-position: 0 100%
-	}
+.link-underline:hover {
+  background-size: 100% 3px;
+  background-position: 0 100%;
+}
+
+.scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #dddddd #e0e0e0;
+}
+
+.scrollbar::-webkit-scrollbar {
+  height: 2px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #dddddd;
+  border-radius: 2px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #e0e0e0;
+  border-radius: 2px;
+}
