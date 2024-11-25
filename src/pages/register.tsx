@@ -1,19 +1,64 @@
 import Button from "@/components/FRONTEND/Button";
 import InputField from "@/components/FRONTEND/Input";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import React, { useContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { UserContext } from "./_app";
 
 const Register: React.FC = () => {
-  const [role, setRole] = useState<"buyer" | "farmer" | null>(null);
+  const [role, setRole] = useState<"buyer" | "farmer">("buyer");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [farmName, setFarmName] = useState("");
+  const [farmerContact, setFarmerContact] = useState("");
+  const [farmAddress, setFarmAddress] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
+  const [user, getUser]: any = useContext(UserContext);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    try {
+      const response = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+          firstname,
+          lastname,
+          confirmPassword,
+          farmName,
+          role,
+          farmerContact,
+          farmAddress,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        Cookies.set("token", data.token, { expires: 365 });
+        getUser();
+        router.push("/account");
+      } else {
+        setError(data.message);
+      }
+    } catch (err) {
+      if (err instanceof Error) setError(err.message);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center py-28 px-5 bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg">
+      <div className="bg-white py-8 px-4 md:px-8 rounded-lg shadow-md w-full max-w-lg">
         <div>
           <h2 className="text-2xl font-bold text-center font-montserrat text-black">
             Register
@@ -22,8 +67,8 @@ const Register: React.FC = () => {
             Create an Account
           </h4>
         </div>
-        <form>
-          <div className="flex flex-col mb-2 lg:flex-row lg:mb-0 gap-3 w-full">
+        <form onSubmit={handleSubmit}>
+          <div className="flex flex-col mb-2 lg:flex-row  gap-3 w-full">
             <div className=" w-full">
               <label
                 htmlFor="store_name"
@@ -49,8 +94,8 @@ const Register: React.FC = () => {
                 Lastname*
               </label>
               <InputField
-                id="last_name"
-                name="last_name"
+                id="lastname"
+                name="lastname"
                 type="text"
                 autoComplete="family_name"
                 isRequired={true}
@@ -77,6 +122,7 @@ const Register: React.FC = () => {
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 font-montserrat">
               Role*
+              <h4 className="py-1">Are you a buyer or farmer?</h4>
             </label>
             <div className="flex gap-2 w-full">
               <h4
@@ -115,9 +161,41 @@ const Register: React.FC = () => {
               />
             </div>
           )}
+          {role === "farmer" && (
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 font-montserrat">
+                Farmer Contact / Your Phone Number *
+              </label>
+              <InputField
+                id="phone"
+                name="phone"
+                type="text"
+                autoComplete="phone"
+                isRequired={true}
+                value={farmerContact}
+                onChange={(e) => setFarmerContact(e.target.value)}
+              />
+            </div>
+          )}
+          {role === "farmer" && (
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 font-montserrat">
+                Farm Address / Your Address *
+              </label>
+              <InputField
+                id="address"
+                name="address"
+                type="text"
+                autoComplete="address"
+                isRequired={true}
+                value={farmAddress}
+                onChange={(e) => setFarmAddress(e.target.value)}
+              />
+            </div>
+          )}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 font-montserrat">
-              Password
+              Password*
             </label>
             <InputField
               id={"password"}
@@ -128,7 +206,27 @@ const Register: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 font-montserrat">
+              Confirm Password*
+            </label>
+            <InputField
+              id={"confirmPassword"}
+              name={"confirmPassword"}
+              type={"confirmPassword"}
+              autoComplete="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          {error && (
+            <div className="flex items-center font-poppins text-sm py-2 text-red-500 gap-1">
+              <InfoOutlinedIcon fontSize="inherit" />
+              <p>{error}</p>
+            </div>
+          )}
           <Button
+            buttonType="submit"
             type="fill"
             className="w-full hover:bg-transparent active:bg-transparent"
             text="Create Account"
