@@ -21,7 +21,7 @@ const NewsCard: React.FC<NewsCardProps> = ({
       className="w-full h-48 object-cover rounded-t-lg"
     />
     <div className="p-4">
-      <h3 className="text-lg font-semibold">{title}</h3>
+      <h3 className="text-lg font-semibold text-black">{title}</h3>
       <p className="text-gray-500 text-sm">{date}</p>
       <p className="text-gray-700 mt-2">{description}</p>
     </div>
@@ -31,26 +31,39 @@ const NewsCard: React.FC<NewsCardProps> = ({
 const News: React.FC = () => {
   const [news, setNews] = useState<NewsProps[] | null>([
     {
-      title: "Success at the World Food Day Exhibition 2024!",
-      date: "Oct 16, 2024",
-      description: "The World Food Day Exhibition at Ebony Park was a success!",
-      image:
-        "https://images.unsplash.com/photo-1518733057094-95b531704d56?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", // Replace with any suitable online image
-    },
-    {
-      title: "Agro-Invest Strategic Drive",
-      date: "Oct 14, 2024",
+      title: "Government Subsidies for Fertilizers Announced",
+      date: "Oct 22, 2024",
       description:
-        "The Agro-Investment Corporation is repurposing non-performing assets.",
-      image:
-        "https://images.unsplash.com/photo-1586772008367-daa4d10fd499?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", // Replace with any suitable online image
+        "The Federal Government has introduced a new subsidy program to make fertilizers more affordable for smallholder farmers across the country. Applications begin next week.",
+      image: "/images/blog1.jpeg",
     },
     {
-      title: "Lease Handover Ceremony in St. Ann",
-      date: "Aug 21, 2024",
-      description: "A significant lease handover ceremony was held in St. Ann.",
-      image:
-        "https://images.unsplash.com/photo-1528657471655-8e8269f87040?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400", // Replace with any suitable online image
+      title: "Rainy Season Farming Techniques for 2025",
+      date: "Mar 8, 2024",
+      description:
+        "Experts share the best practices for optimizing crop yields during the upcoming rainy season, focusing on rice, maize, and cassava.",
+      image: "/images/blog2.jpeg",
+    },
+    {
+      title: "Fresh Export Opportunities for Nigerian Farmers",
+      date: "Apr 14, 2024",
+      description:
+        "The EU is seeking suppliers of organic farm produce from Africa, opening new doors for Nigerian farmers to export fresh goods like ginger, yams, and peppers.",
+      image: "/images/blog3.jpeg",
+    },
+    {
+      title: "Digital Farming Tools Workshop in Abuja",
+      date: "June 3, 2024",
+      description:
+        "A free training session on how farmers can use mobile apps to track inventory, monitor weather patterns, and market produce is scheduled for February 2025.",
+      image: "/images/blog4.jpeg",
+    },
+    {
+      title: "Drought-Resistant Crop Seeds Now Available",
+      date: "Sept 12, 2024",
+      description:
+        "Leading seed companies release new drought-resistant seed varieties to help farmers tackle unpredictable weather conditions.",
+      image: "/images/blog5.jpeg",
     },
   ]);
 
