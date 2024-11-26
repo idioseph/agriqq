@@ -95,12 +95,15 @@ const Index: NextPage<Props> = ({}) => {
         setIsDialogOpen(false);
         alert("Product created successfully!");
         console.log("Created product:", data.product);
+        fetchUserProducts();
       } else {
         alert(`Error: ${data.message}`);
       }
     } catch (error) {
-      console.error("Error creating product:", error);
-      alert("An unexpected error occurred.");
+      if (error instanceof Error) {
+        console.error("Error creating product:", error);
+        alert(error.message);
+      }
     }
   };
 
@@ -122,8 +125,10 @@ const Index: NextPage<Props> = ({}) => {
         console.log(`Error: ${data.message}`);
       }
     } catch (error) {
-      console.error("Error fetching products:", error);
-      alert("An unexpected error occurred.");
+      if (error instanceof Error) {
+        console.error("Error fetching products:", error.message, error);
+        alert(error.message);
+      }
     }
   };
 
