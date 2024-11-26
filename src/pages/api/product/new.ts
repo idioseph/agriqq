@@ -33,7 +33,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
         const { name, description, category, price, stock, images } = req.body;
 
-        if (!name || !description || !price || !stock || !images.length) {
+        if (!name || !description || !price || !stock) {
           return res.status(400).json({
             message:
               "Missing required fields. Please provide all product details.",
@@ -66,7 +66,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         break;
       } catch (error) {
         if (error instanceof Error) {
-          console.log(error)
+          console.log(error);
           res.status(400).json({ message: error.message });
         }
         break;
