@@ -78,7 +78,7 @@ const Index: NextPage<Props> = ({}) => {
     price: number;
     stock: number;
     images: string[];
-  }): Promise<void> => {
+  }) => {
     try {
       const response = await fetch("/api/product/new", {
         method: "POST",
@@ -89,15 +89,12 @@ const Index: NextPage<Props> = ({}) => {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
       if (response.ok) {
         setIsDialogOpen(false);
         alert("Product created successfully!");
-        console.log("Created product:", data.product);
         fetchUserProducts();
       } else {
-        alert(`Error: ${data.message}`);
+        alert(`An Error Occured, Ensure to fill all input Fields`);
       }
     } catch (error) {
       if (error instanceof Error) {
