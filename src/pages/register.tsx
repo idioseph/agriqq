@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { UserContext } from "./_app";
+import { showToastError, showToastSuccess } from "@/utils/toastFunctions";
 
 const Register: React.FC = () => {
   const [role, setRole] = useState<"buyer" | "farmer">("buyer");
@@ -45,14 +46,17 @@ const Register: React.FC = () => {
       });
       const data = await response.json();
       if (response.ok) {
+        showToastSuccess("Account created successfully!");
         Cookies.set("token", data.token, { expires: 365 });
         getUser();
         router.push("/account");
       } else {
-        setError(data.message);
+        showToastError(data.message);
       }
     } catch (err) {
-      if (err instanceof Error) setError(err.message);
+      if (err instanceof Error) {
+        showToastError(err.message);
+      }
     }
   };
 

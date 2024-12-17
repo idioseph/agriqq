@@ -12,6 +12,7 @@ import React, {
 import Cookies from "js-cookie";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { UserContext } from "./_app";
+import { showToastError, showToastSuccess } from "@/utils/toastFunctions";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -33,15 +34,16 @@ const Login: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
+        showToastSuccess("Login successful!"); 
         Cookies.set("token", data.token, { expires: 365 });
         getUser();
         router.push("/account");
       } else {
-        setErrors(data.message);
+        showToastError(data.message);
       }
     } catch (error) {
       if (error instanceof Error) {
-        setErrors(error.message);
+        showToastError(error.message);
       }
     } finally {
       setLoading(false);
