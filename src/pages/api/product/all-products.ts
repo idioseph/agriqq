@@ -9,10 +9,11 @@ import {
 import { JwtPayload } from "jsonwebtoken";
 import Product from "@/models/Product";
 
-dbConnect();
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+  await dbConnect();
+  
   const { method } = req;
 
   switch (method) {
