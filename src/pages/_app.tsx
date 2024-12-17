@@ -15,12 +15,10 @@ export default function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<any>(null);
   const getUser = () => {
     const token = Cookies.get("token") || "";
-    console.log(token);
     let payload;
     try {
       payload = jwtDecode(token);
     } catch (error) {
-      console.log(error);
     } finally {
       setUser(payload);
     }

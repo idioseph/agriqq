@@ -25,10 +25,8 @@ export default function Home() {
       if (response.ok) {
         setProducts(data.products);
       } else {
-        console.log(`Error: ${data.message}`);
       }
     } catch (error) {
-      console.error("Error fetching products:", error);
     }
   };
   return (

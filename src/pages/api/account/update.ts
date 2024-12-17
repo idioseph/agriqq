@@ -89,7 +89,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       user: updatedUser,
     });
   } catch (error) {
-    console.error(error);
     return res
       .status(500)
       .json({ message: "An error occurred while updating profile." });

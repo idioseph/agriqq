@@ -21,7 +21,6 @@ function useLocalStorage<T>(
       }
     } catch (error) {
       // If error also return initialValue
-      console.log(error);
       return initialValue;
     }
   });
@@ -41,7 +40,6 @@ function useLocalStorage<T>(
       }
     } catch (error) {
       // A more advanced implementation would handle the error case
-      console.log(error);
     }
   }, [key, storedValue]);
 

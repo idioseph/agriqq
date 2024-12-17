@@ -54,10 +54,8 @@ const AccountDetail: NextPage<Props> = () => {
       if (response.ok) {
         setProfile(data.user);
       } else {
-        console.log(data);
       }
     } catch (error) {
-      console.error("Error fetching profile:", error);
     } finally {
       setIsLoading(false);
     }
@@ -83,10 +81,8 @@ const AccountDetail: NextPage<Props> = () => {
       });
       if (response.ok) {
         const data = response.json();
-        console.log(response);
       }
     } catch (error) {
-      console.error("Error updating profile:", error);
     } finally {
       setIsProfileUpdating(false);
       setIsEditingProfile(false);

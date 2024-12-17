@@ -13,7 +13,7 @@ import Product from "@/models/Product";
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   await dbConnect();
-  
+
   const { method } = req;
 
   switch (method) {
@@ -23,7 +23,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(200).json({ products });
       } catch (error) {
         if (error instanceof Error) {
-          console.error(error);
           return res.status(500).json({ message: error.message });
         }
       }

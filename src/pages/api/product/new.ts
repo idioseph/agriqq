@@ -67,7 +67,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       product,
     });
   } catch (error) {
-    console.error("Error in /api/product/new:", error);
     return res.status(500).json({
       success: false,
       message: "Error creating product",

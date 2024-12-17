@@ -9,6 +9,7 @@ import AddProductModal from "@/components/DASHBOARD/AddProductModal";
 import Button from "@/components/FRONTEND/Button";
 import { Product } from "@/interface/Product";
 import ProductItem from "@/components/FRONTEND/ProductItem";
+import { showToastError, showToastSuccess } from "@/utils/toastFunctions";
 
 interface Props {}
 
@@ -55,10 +56,8 @@ const Index: NextPage<Props> = ({}) => {
       if (response.ok) {
         setProfile(data.user);
       } else {
-        console.log(data);
       }
     } catch (error) {
-      console.error("Error fetching profile:", error);
     } finally {
       setIsLoading(false);
     }
@@ -81,7 +80,6 @@ const Index: NextPage<Props> = ({}) => {
     images: string[];
   }) => {
     try {
-      console.log(token);
       const response = await fetch("/api/product/new", {
         method: "POST",
         headers: {
@@ -91,17 +89,19 @@ const Index: NextPage<Props> = ({}) => {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
+        showToastSuccess("Product created successfully!");
         setIsDialogOpen(false);
-        alert("Product created successfully!");
         fetchUserProducts();
       } else {
-        alert(`An Error Occured, Ensure to fill all input Fields`);
+        showToastError(data.message || "Failed to create product");
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.error("Error creating product:", error);
-        alert(error.message);
+        showToastError(error.message);
+
       }
     }
   };
@@ -121,18 +121,15 @@ const Index: NextPage<Props> = ({}) => {
       if (response.ok) {
         setProducts(data.products);
       } else {
-        console.log(`Error: ${data.message}`);
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.error("Error fetching products:", error.message, error);
         alert(error.message);
       }
     }
   };
 
   const handleSubmit = (product: any) => {
-    console.log(product);
     createProduct(product);
     fetchUserProducts();
   };
