@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import InputField from "../FRONTEND/Input";
 import Button from "../FRONTEND/Button";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import Image from 'next/image';
 
 interface AddProductModalProps {
   isOpen: boolean;
@@ -183,9 +184,11 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   key={index}
                   className="flex items-center justify-between space-x-2"
                 >
-                  <img
+                  <Image
                     src={image}
                     alt={`Uploaded ${index}`}
+                    width={200}
+                    height={200}
                     className="w-16 h-16 rounded"
                   />
                   <div

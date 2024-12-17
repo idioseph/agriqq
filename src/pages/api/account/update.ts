@@ -11,7 +11,7 @@ import { JwtPayload } from "jsonwebtoken";
 
 dbConnect();
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
   if (method !== "PUT") {
@@ -95,3 +95,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       .json({ message: "An error occurred while updating profile." });
   }
 };
+
+export default handler;

@@ -5,7 +5,7 @@ import { generateToken, hashPassword, comparePassword } from "../../lib/auth";
 
 dbConnect();
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
   switch (method) {
@@ -118,3 +118,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 };
+
+export default handler;

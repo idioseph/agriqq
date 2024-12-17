@@ -11,16 +11,14 @@ import Product from "@/models/Product";
 
 dbConnect();
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
   switch (method) {
     case "GET":
       try {
-        const products = await Product.find().populate(
-          "farmerId",
-          "firstname lastname email"
-        ); // Populate farmer details
+        const products = await Product.find() // Populate farmer details
         return res.status(200).json({ products });
       } catch (error) {
         if (error instanceof Error) {

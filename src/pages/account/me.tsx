@@ -37,6 +37,7 @@ const AccountDetail: NextPage<Props> = () => {
 
   useEffect(() => {
     fetchProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchProfile = async () => {

@@ -6,7 +6,7 @@ import { JwtPayload } from "jsonwebtoken";
 
 dbConnect();
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
   if (method !== "GET") {
@@ -47,3 +47,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       });
   }
 };
+
+export default handler;

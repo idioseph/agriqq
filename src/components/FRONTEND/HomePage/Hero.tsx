@@ -4,6 +4,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import Button from "../Button";
 import Typewriter from "../Typewriter";
+import Image from 'next/image';
 
 interface Props {}
 
@@ -20,10 +21,22 @@ const Hero: NextPage<Props> = ({}) => {
         transitionTime={1500}
       >
         <div>
-          <img className="h-[100vh] object-cover" src="images/hero.jpg" />
+          <Image
+            src="/images/hero.jpg"
+            alt="Hero image description"
+            width={500}
+            height={300}
+            className="h-[100vh] object-cover"
+          />
         </div>
         <div>
-          <img className="h-[100vh] object-cover" src="images/hero2.jpg" />
+          <Image
+            src="/images/hero2.jpg"
+            alt="Hero image description"
+            width={500}
+            height={300}
+            className="h-[100vh] object-cover"
+          />
         </div>
       </Carousel>
       <div className="md:px-36 px-10 sm:px-16 absolute flex flex-col items-start justify-center inset-0 bg-white bg-opacity-40">

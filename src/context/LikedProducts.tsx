@@ -5,96 +5,71 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import { showToastSuccess } from "@/utils/toastFunctions";
+import { showToastSuccess, showToastError, showToastWarning, showToastInfo } from "@/utils/toastFunctions";
 import { Product } from "@/interface/Product";
 
-export interface Cart {
-  product: Product;
-  quantity: number;
-}
-interface CartContextType {
-  cartItemCount: number;
-  cartItems: Cart[];
-  addItemToCart: (item: Cart) => void;
-  removeItemFromCart: (item: Cart) => void;
-  clearCart: () => void;
-  getCartItems: () => Cart[];
+interface LikedProductsContextType {
+  likedItems: Product[];
+  addToLiked: (product: Product) => void;
+  removeFromLiked: (productId: string) => void;
+  isLiked: (productId: string) => boolean;
 }
 
-// Create the context with default values
-const CartContext = createContext<CartContextType | undefined>(undefined);
+const LikedProductsContext = createContext<LikedProductsContextType | undefined>(undefined);
 
-export const CartProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
-  const [cartItems, setCartItems] = useState<Cart[]>([]);
-  const [cartItemCount, setCartItemCount] = useState<number>(0);
+export function LikedProductsProvider({ children }: { children: React.ReactNode }) {
+  const [likedItems, setLikedItems] = useState<Product[]>([]);
 
+  // Load liked items from localStorage on mount
   useEffect(() => {
-    const storedCartItems = JSON.parse(
-      localStorage.getItem("agriqq_cart") || "[]"
-    );
-    setCartItems(storedCartItems);
-    setCartItemCount(storedCartItems.length);
+    const savedLikedItems = localStorage.getItem('likedProducts');
+    if (savedLikedItems) {
+      setLikedItems(JSON.parse(savedLikedItems));
+    }
   }, []);
 
-  const addItemToCart = (item: Cart) => {
-    // Remove the item if it already exists in the cart
-    const updatedCartItems = cartItems.filter(
-      (cartItem) => cartItem.product._id !== item.product._id
-    );
+  // Save to localStorage whenever likedItems changes
+  useEffect(() => {
+    localStorage.setItem('likedProducts', JSON.stringify(likedItems));
+  }, [likedItems]);
 
-    // Adding the new Item to cart
-    updatedCartItems.push(item);
-
-    // Here I am updating the state and localStorage with the new Product's Cart Item
-    setCartItems(updatedCartItems);
-    setCartItemCount(updatedCartItems.length);
-    localStorage.setItem("agriqq_cart", JSON.stringify(updatedCartItems));
-
-    showToastSuccess("Product Added to Liked products");
+  const addToLiked = (product: Product) => {
+    setLikedItems(prev => {
+      if (!prev.some(item => item._id === product._id)) {
+        showToastSuccess(`${product.name} added to favorites!`);
+        return [...prev, product];
+      }
+      showToastWarning(`${product.name} is already in favorites!`);
+      return prev;
+    });
   };
 
-  const removeItemFromCart = (item: Cart) => {
-    const updatedCartItems = cartItems.filter(
-      (cartItem) => cartItem?.product?._id !== item?.product?._id
-    );
-    setCartItems(updatedCartItems);
-    setCartItemCount(updatedCartItems.length);
-    localStorage.setItem("agriqq_cart", JSON.stringify(updatedCartItems));
+  const removeFromLiked = (productId: string) => {
+    setLikedItems(prev => {
+      const product = prev.find(item => item._id === productId);
+      const filtered = prev.filter(item => item._id !== productId);
+      if (product) {
+        showToastInfo(`${product.name} removed from favorites`);
+      }
+      return filtered;
+    });
   };
 
-  const clearCart = () => {
-    setCartItems([]);
-    setCartItemCount(0);
-    localStorage.removeItem("agriqq_cart");
-  };
-
-  const getCartItems = (): Cart[] => {
-    return JSON.parse(localStorage.getItem("agriqq_cart") || "[]");
+  const isLiked = (productId: string) => {
+    return likedItems.some(item => item._id === productId);
   };
 
   return (
-    <CartContext.Provider
-      value={{
-        cartItemCount,
-        cartItems,
-        addItemToCart,
-        removeItemFromCart,
-        getCartItems,
-        clearCart,
-      }}
-    >
+    <LikedProductsContext.Provider value={{ likedItems, addToLiked, removeFromLiked, isLiked }}>
       {children}
-    </CartContext.Provider>
+    </LikedProductsContext.Provider>
   );
-};
+}
 
-// Custom hook to use the CartContext
-export const useCart = () => {
-  const context = useContext(CartContext);
-  if (context === undefined) {
-    throw new Error("useCart must be used within a CartProvider");
+export const useLikedProducts = () => {
+  const context = useContext(LikedProductsContext);
+  if (!context) {
+    throw new Error('useLikedProducts must be used within a LikedProductsProvider');
   }
   return context;
 };

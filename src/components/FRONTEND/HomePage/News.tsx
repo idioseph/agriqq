@@ -1,5 +1,6 @@
 import { NewsProps } from "@/interface/News";
 import React, { useState } from "react";
+import Image from 'next/image';
 
 interface NewsCardProps {
   title: string;
@@ -15,9 +16,11 @@ const NewsCard: React.FC<NewsCardProps> = ({
   image,
 }) => (
   <div className="bg-white rounded-lg shadow-md p-4 w-full max-w-xs">
-    <img
+    <Image
       src={image}
       alt={title}
+      width={400}
+      height={300}
       className="w-full h-48 object-cover rounded-t-lg"
     />
     <div className="p-4">

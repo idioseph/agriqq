@@ -41,7 +41,7 @@ const UserSchema = new Schema<IUser>(
       },
     },
     farmDescription: {
-      type: String
+      type: String,
     },
     joinedDate: { type: Date, default: Date.now },
   },

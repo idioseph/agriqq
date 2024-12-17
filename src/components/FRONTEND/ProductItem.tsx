@@ -1,36 +1,62 @@
 import React, { useContext } from "react";
 import Button from "./Button";
-import ThumbUpOffAltRoundedIcon from "@mui/icons-material/ThumbUpOffAltOutlined";
-import { useCart } from "@/context/LikedProducts";
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { Product } from "@/interface/Product";
+import Image from "next/image";
+import { useLikedProducts } from "@/context/LikedProducts";
 
 interface ProductItemProps {
   product: Product;
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
-  const { cartItemCount, cartItems, addItemToCart, removeItemFromCart } =
-    useCart();
+  const { isLiked, addToLiked, removeFromLiked } = useLikedProducts();
 
-  const AddItemToCart = () => {
-    const Product = {
-      product,
-      quantity: 1,
-    };
-    addItemToCart(Product);
+  const toggleLike = () => {
+    if (isLiked(product._id)) {
+      removeFromLiked(product._id);
+    } else {
+      addToLiked(product);
+    }
   };
+
+  // Common classes for like button
+  const likeButtonClasses = `
+    transition-all duration-300 ease-in-out
+    flex items-center gap-2 rounded-md cursor-pointer
+    hover:scale-105 active:scale-95
+  `;
+
+  const mobileLikeButton = `
+    ${likeButtonClasses}
+    text-xl px-3 py-2 border
+    ${isLiked(product._id)
+      ? 'bg-darkGreen text-white border-darkGreen'
+      : 'text-darkGreen border-darkGreen hover:bg-darkGreen/10'}
+  `;
+
+  const desktopLikeButton = `
+    ${likeButtonClasses}
+    text-white px-4 py-2
+    ${isLiked(product._id)
+      ? 'bg-darkGreen hover:bg-darkGreen/90'
+      : 'bg-gray-600/80 hover:bg-gray-600'}
+  `;
 
   return (
     <div className="relative w-64 bg-white shadow-md rounded-md overflow-hidden group">
       {/* Product Image */}
-      <img
+      <Image
+        height={100}
+        width={100}
         src={product.images[0]}
         alt={product.name}
         className="w-full h-48 object-cover"
       />
 
       {/* Discount Badge (if applicable) */}
-      {product.price && (
+      {product.price && (Math.round(((product.price - product.price) / product.price) * 100) != 0) && (
         <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
           -{Math.round(((product.price - product.price) / product.price) * 100)}
           %
@@ -51,24 +77,39 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
         </div>
         <div className="mt-2 lg:hidden gap-2 flex">
           <Button text="Buy now" className="w-full !font-medium" type="fill" />
-          <div className="text-xl px-2 flex items-center justify-center rounded-md hover:text-white hover:bg-darkGreen cursor-pointer text-darkGreen border border-darkGreen">
-            <ThumbUpOffAltRoundedIcon fontSize="inherit" />
+          <div onClick={toggleLike} className={mobileLikeButton}>
+            {isLiked(product._id) ? (
+              <ThumbUpIcon fontSize="inherit" className="animate-bounce" />
+            ) : (
+              <ThumbUpOffAltIcon fontSize="inherit" />
+            )}
           </div>
         </div>
       </div>
 
-      {/* Hover Overlay */}
-      <div className="absolute scale-75 rounded-md hidden inset-0 group-hover:scale-100 bg-black bg-opacity-70 lg:flex flex-col items-center justify-center space-y-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+      {/* Desktop Hover Overlay */}
+      <div className="absolute inset-0 bg-black/70 lg:flex hidden flex-col items-center justify-center space-y-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
         <Button
           type="fill"
           className="text-white text-sm hover:!text-white hover:!outline-white font-poppins font-medium"
           text="Buy now"
         />
-        <div className="flex space-x-4 text-white">
-          <button onClick={AddItemToCart} className="hover:text-gray-300">
-            Like
-          </button>
-        </div>
+        <button 
+          onClick={toggleLike} 
+          className={desktopLikeButton}
+        >
+          {isLiked(product._id) ? (
+            <>
+              <ThumbUpIcon className="animate-bounce" />
+              <span>Liked</span>
+            </>
+          ) : (
+            <>
+              <ThumbUpOffAltIcon />
+              <span>Like</span>
+            </>
+          )}
+        </button>
       </div>
     </div>
   );

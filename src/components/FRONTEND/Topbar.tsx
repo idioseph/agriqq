@@ -7,6 +7,8 @@ import Button from "./Button";
 import { UserContext } from "@/pages/_app";
 import PermIdentityRoundedIcon from "@mui/icons-material/PermIdentityRounded";
 import { useLogout } from "@/hooks/useLogout";
+import FavoriteIcon from '@mui/icons-material/FavoriteOutlined';
+import { useLikedProducts } from '@/context/LikedProducts';
 
 interface Props {}
 
@@ -14,14 +16,6 @@ const MainMenu: any = [
   {
     name: "Home",
     url: "/",
-  },
-  {
-    name: "Our Stories",
-    url: "#stories",
-  },
-  {
-    name: "About Us",
-    url: "#mission",
   },
   {
     name: "Products",
@@ -35,6 +29,7 @@ const Topbar: NextPage<Props> = ({}) => {
   const pathname = usePathname();
   const [user] = useContext(UserContext);
   const logout = useLogout();
+  const { likedItems } = useLikedProducts();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -173,9 +168,38 @@ const Topbar: NextPage<Props> = ({}) => {
               />
             </div>
           )}
+
+          {/* Mobile Basket Link */}
+          <li className="lg:hidden flex justify-center">
+            <Link 
+              href="/basket" 
+              className="relative flex items-center gap-2 text-darkGreen"
+              onClick={() => setNavOpen(false)}
+            >
+              <FavoriteIcon />
+              <span>Liked Items</span>
+              {likedItems.length > 0 && (
+                <span className="bg-darkGreen text-white text-xs px-2 py-0.5 rounded-full">
+                  {likedItems.length}
+                </span>
+              )}
+            </Link>
+          </li>
         </ul>
       </div>
-      <div className="order-1 ml-auto hidden min-w-[200px] items-center justify-center lg:order-2 lg:ml-0 lg:flex">
+      <div className="order-1 ml-auto hidden min-w-[200px] items-center justify-center lg:order-2 lg:ml-0 lg:flex gap-4">
+        {/* Basket Link */}
+        <Link href="/basket" className="relative group">
+          <div className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200">
+            <FavoriteIcon className="text-darkGreen" />
+            {likedItems.length > 0 && (
+              <span className="absolute -top-1 -right-1 bg-darkGreen text-white text-xs w-5 h-5 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                {likedItems.length}
+              </span>
+            )}
+          </div>
+        </Link>
+
         {user ? (
           <Link
             className="btn btn-primary z-0 py-[14px]"

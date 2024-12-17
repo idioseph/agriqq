@@ -1,5 +1,5 @@
 import AccountNavigation from "@/components/DASHBOARD/AccountNavigation";
-import { useCart } from "@/context/LikedProducts";
+import { useLikedProducts } from "@/context/LikedProducts";
 import { NextPage } from "next";
 import Cookies from "js-cookie";
 import { FormEvent, useEffect, useState } from "react";
@@ -27,8 +27,8 @@ interface UserProfileProp {
 }
 
 const Index: NextPage<Props> = ({}) => {
-  const { cartItemCount, cartItems, addItemToCart, removeItemFromCart } =
-    useCart();
+  const { likedItems } = useLikedProducts();
+
   const token = Cookies.get("token");
   const [profile, setProfile] = useState<UserProfileProp | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +38,7 @@ const Index: NextPage<Props> = ({}) => {
   useEffect(() => {
     fetchProfile();
     fetchUserProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchProfile = async () => {
@@ -140,16 +141,16 @@ const Index: NextPage<Props> = ({}) => {
         <AccountNavigation />
       </div>
       {profile?.role === "buyer" &&
-        (cartItems.length > 0 ? (
-          <div className="flex justify-center flex-wrap gap-4">
-            {cartItems?.map((product, index) => (
-              <ProductItem product={product.product} key={index} />
+        (likedItems.length > 0 ? (
+          <div className="flex flex-wrap gap-4 justify-center">
+            {likedItems.map((product) => (
+              <ProductItem key={product._id} product={product} />
             ))}
           </div>
         ) : (
-          <h4 className="text-center font-montserrat flex text-black">
-            No Liked Product
-          </h4>
+          <div className="flex items-center justify-center text-gray-500 mt-10">
+            No liked products yet
+          </div>
         ))}
       {profile?.role === "farmer" && (
         <div className="w-full">
