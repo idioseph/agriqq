@@ -81,6 +81,7 @@ const Index: NextPage<Props> = ({}) => {
     images: string[];
   }) => {
     try {
+      console.log(token);
       const response = await fetch("/api/product/new", {
         method: "POST",
         headers: {
