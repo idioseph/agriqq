@@ -7,6 +7,7 @@ import { UserContext } from "../_app";
 import Cookies from "js-cookie";
 import { ObjectId } from "mongoose";
 import AccountNavigation from "@/components/DASHBOARD/AccountNavigation";
+import { showToastError, showToastSuccess } from "@/utils/toastFunctions";
 
 interface Props {}
 
@@ -81,8 +82,12 @@ const AccountDetail: NextPage<Props> = () => {
       });
       if (response.ok) {
         const data = response.json();
+        showToastSuccess("Profile updated successfully!");
       }
     } catch (error) {
+      if (error instanceof Error) {
+        showToastError(error.message);
+      }
     } finally {
       setIsProfileUpdating(false);
       setIsEditingProfile(false);
