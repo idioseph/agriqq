@@ -4,50 +4,46 @@ import React, { useState, useEffect } from "react";
 
 interface TypewriterProps {
   textList: string[];
-  typingSpeed?: number; // time per character
-  pauseTime?: number; // pause time between words
-  className?: String;
+  typingSpeed?: number;
+  pauseTime?: number;
+  className?: string;
 }
 
 const Typewriter: NextPage<TypewriterProps> = ({
   textList,
-  typingSpeed = 100,
-  pauseTime = 1500,
+  typingSpeed = 150,
+  pauseTime = 2000,
   className,
 }) => {
-  const [displayedText, setDisplayedText] = useState("");
-  const [index, setIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(true);
+  const [currentText, setCurrentText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const currentText = textList[index];
-    if (isTyping) {
-      const typingInterval = setInterval(() => {
-        setDisplayedText((prev) => {
-          if (prev.length < currentText.length) {
-            return currentText.slice(0, prev.length + 1);
-          } else {
-            clearInterval(typingInterval);
-            setIsTyping(false);
-            return prev;
-          }
-        });
-      }, typingSpeed);
-      return () => clearInterval(typingInterval);
-    } else {
-      const pauseTimeout = setTimeout(() => {
-        setIsTyping(true);
-        setDisplayedText("");
-        setIndex((prevIndex) => (prevIndex + 1) % textList.length);
+    const targetText = textList[currentIndex];
+    
+    if (currentText === targetText) {
+      // Move to next text after pause
+      const timeout = setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % textList.length);
+        setCurrentText("");
       }, pauseTime);
-      return () => clearTimeout(pauseTimeout);
+      
+      return () => clearTimeout(timeout);
     }
-  }, [isTyping, index, textList, typingSpeed, pauseTime]);
+
+    // Type next character
+    const timeout = setTimeout(() => {
+      setCurrentText(targetText.slice(0, currentText.length + 1));
+    }, typingSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [currentText, currentIndex, textList, typingSpeed, pauseTime]);
 
   return (
-    <h4 className={`border-r-2 max-h-max border-gray-600 pr-1 ${className}`}>
-      {displayedText}
-    </h4>
+    <div className={`${className} flex items-center`}>
+      <span className="whitespace-pre">{currentText}</span>
+      <span className="animate-pulse border-r-4 border-white h-[80%] ml-1"></span>
+    </div>
   );
 };
 

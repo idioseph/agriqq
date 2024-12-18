@@ -19,16 +19,16 @@ const Footer: React.FC = () => {
           </h4>
           <ul className="text-sm font-poppins space-y-2">
             <li>
-              <a href="/about" className="hover:text-lightGreen">
-                About Us
-              </a>
+              <Link href="/" className="hover:text-lightGreen">
+                Home
+              </Link>
             </li>
             <li>
               <Link href="/products/" className="hover:text-lightGreen">
                 Products
               </Link>
             </li>
-            <li>
+            {/* <li>
               <a href="/stories" className="hover:text-lightGreen">
                 Our Stories
               </a>
@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
               <a href="/contact" className="hover:text-lightGreen">
                 Contact Us
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div>
@@ -45,7 +45,7 @@ const Footer: React.FC = () => {
           <p className="text-sm font-poppins">Email: afriqqltd@gmail.com</p>
           <p className="text-sm font-poppins">Phone: +234 903 8159 106</p>
           <p className="text-sm font-poppins">
-            Location: Rivers State
+            Location: Lagos, Nigeria
           </p>
         </div>
       </div>

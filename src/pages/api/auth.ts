@@ -3,9 +3,9 @@ import dbConnect from "../../lib/dbConnect";
 import User from "../../models/User";
 import { generateToken, hashPassword, comparePassword } from "../../lib/auth";
 
-dbConnect();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  await dbConnect();
   const { method } = req;
 
   switch (method) {

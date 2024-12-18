@@ -7,6 +7,7 @@ import Product from "@/models/Product";
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   await dbConnect();
+  
   const { method } = req;
 
   switch (method) {

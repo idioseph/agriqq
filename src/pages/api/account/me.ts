@@ -4,9 +4,9 @@ import User from "@/models/User";
 import { verifyToken } from "@/lib/auth";
 import { JwtPayload } from "jsonwebtoken";
 
-dbConnect();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  await dbConnect();
   const { method } = req;
 
   if (method !== "GET") {

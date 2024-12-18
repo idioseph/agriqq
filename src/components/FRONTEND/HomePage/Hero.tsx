@@ -4,21 +4,31 @@ import { NextPage } from "next";
 import Link from "next/link";
 import Button from "../Button";
 import Typewriter from "../Typewriter";
-import Image from 'next/image';
+import Image from "next/image";
 
 interface Props {}
 
 const Hero: NextPage<Props> = ({}) => {
   return (
-    <div className="h-screen relative">
+    <div className="h-screen relative bg-gray-100">
       <Carousel
         showStatus={false}
-        showIndicators={false}
+        showIndicators={true}
         showThumbs={false}
         autoPlay
         showArrows={false}
         infiniteLoop
-        transitionTime={1500}
+        transitionTime={1000}
+        interval={5000}
+        renderIndicator={(clickHandler, isSelected, index) => (
+          <div
+            className={`inline-block mx-1 w-2 h-2 rounded-full cursor-pointer transition-all duration-300 ${
+              isSelected ? 'bg-darkGreen w-6' : 'bg-gray-400'
+            }`}
+            onClick={clickHandler}
+            key={index}
+          />
+        )}
       >
         <div>
           <Image
@@ -39,7 +49,7 @@ const Hero: NextPage<Props> = ({}) => {
           />
         </div>
       </Carousel>
-      <div className="md:px-36 px-10 sm:px-16 absolute flex flex-col items-start justify-center inset-0 bg-white bg-opacity-40">
+      <div className="md:px-36 px-10 sm:px-16 absolute flex flex-col items-start justify-center inset-0 bg-white/30 backdrop-blur-sm">
         <Typewriter
           className={
             "md:text-5xl md:h-[50px] text-darkGreen font-bold text-nowrap text-3xl h-[36px]"
@@ -65,6 +75,20 @@ const Hero: NextPage<Props> = ({}) => {
           />
         </div>
       </div>
+      <div className="absolute bottom-8 left-6 sm:left-16 md:left-36 flex gap-8">
+          <div className="text-white">
+            <div className="text-3xl font-bold">500+</div>
+            <div className="text-white/80">Active Farmers</div>
+          </div>
+          <div className="text-whit">
+            <div className="text-3xl font-bold">100+</div>
+            <div className="text-whit/80">Products Listed</div>
+          </div>
+          <div className="text-whit">
+            <div className="text-3xl font-bold">98%</div>
+            <div className="text-whit/80">Customer Satisfaction</div>
+          </div>
+        </div>
     </div>
   );
 };
