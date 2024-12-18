@@ -3,6 +3,9 @@ import News from "@/components/FRONTEND/HomePage/News";
 import Products from "@/components/FRONTEND/HomePage/Products";
 import { Product } from "@/interface/Product";
 import { useEffect, useState } from "react";
+import About from "@/components/FRONTEND/HomePage/About";
+import GetStarted from "@/components/FRONTEND/HomePage/GetStarted";
+import FAQ from "@/components/FRONTEND/HomePage/FAQ";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[] | null>(null);
@@ -35,7 +38,16 @@ export default function Home() {
         <Hero />
       </section>
       <section>
+        <About />
+      </section>
+      <section>
         <Products products={products} />
+      </section>
+      <section>
+        <GetStarted />
+      </section>
+      <section>
+        <FAQ />
       </section>
       <section>
         <News />

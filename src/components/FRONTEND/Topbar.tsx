@@ -18,6 +18,18 @@ const MainMenu: any = [
     url: "/",
   },
   {
+    name: "Get Started",
+    url: "#get-started",
+  },
+  {
+    name: "About",
+    url: "#about",
+  },
+  {
+    name: "FAQ",
+    url: "#faq",
+  },
+  {
     name: "Products",
     url: "/products",
   },

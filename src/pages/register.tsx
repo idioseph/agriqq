@@ -9,6 +9,7 @@ import { UserContext } from "./_app";
 import { showToastError, showToastSuccess } from "@/utils/toastFunctions";
 
 const Register: React.FC = () => {
+  const router = useRouter();
   const [role, setRole] = useState<"buyer" | "farmer">("buyer");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -19,8 +20,15 @@ const Register: React.FC = () => {
   const [farmerContact, setFarmerContact] = useState("");
   const [farmAddress, setFarmAddress] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter();
   const [user, getUser]: any = useContext(UserContext);
+
+  // get the role from the query params
+  useEffect(() => {
+    const { type } = router.query;
+    if (type === "farmer" || type === "buyer") {
+      setRole(type);
+    }
+  }, [router.query]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
