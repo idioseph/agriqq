@@ -39,7 +39,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           return res.status(400).json({ message: "Passwords do not match" });
         }
 
-        if (role === "farmer" && !farmName || !farmAddress || !farmerContact) {
+        if (role === "farmer" && (!farmName || !farmAddress || !farmerContact)) {
           return res
             .status(400)
             .json({ message: "Farmer details are required for farmers" });

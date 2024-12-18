@@ -36,6 +36,18 @@ const Register: React.FC = () => {
       setError("Passwords do not match");
       return;
     }
+
+    console.log({
+      email,
+      password,
+      firstname,
+      lastname,
+      confirmPassword,
+      farmName,
+      role,
+      farmerContact,
+      farmAddress,
+    })
     try {
       const response = await fetch("/api/auth", {
         method: "POST",
